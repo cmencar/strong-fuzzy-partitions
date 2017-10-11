@@ -7,7 +7,7 @@ class TrapezoidalSFP:
         self.c = c
         self.d = d
 
-    def get_value(self, x):
+    def get_fuzzy_value(self, x):
         if self.a < x < self.b:
             return (x - self.a) / (self.b - self.a)
         elif self.b <= x <= self.c:

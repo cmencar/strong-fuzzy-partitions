@@ -14,15 +14,15 @@ class MyTest(unittest.TestCase):
         min_max = [2, 25]
 
         computed = strong_fuzzy_partition._compute_slope(cuts, min_max)
-        expected = 0.2
+        expected = 0.5
         self.assertEqual(computed, expected)
 
     def test_build_first_trapeze(self):
         first_cut = 3
         slope = 1
-        min = 2
+        min_value = 2
 
-        computed = strong_fuzzy_partition._build_first_trapeze(first_cut, min, slope)
+        computed = strong_fuzzy_partition._build_first_trapeze(first_cut, min_value, slope)
         expected = TrapezoidalSFP(2, 2, 2.5, 3.5)
         self.assertEqual(computed, expected)
 
@@ -38,4 +38,3 @@ class MyTest(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
-
