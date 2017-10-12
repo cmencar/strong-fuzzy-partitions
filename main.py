@@ -4,7 +4,7 @@ import sfp_plot
 cuts = [3, 8, 15, 23]
 min_max = [2, 25]
 
-computed_trapezes = strong_fuzzy_partition.build_trapezes_series(cuts, min_max)
+computed_trapezes = strong_fuzzy_partition.constant_slope(cuts, min_max)
 res = [str(trapeze) for trapeze in computed_trapezes]
 
 print 'cuts:\n' + str(cuts)

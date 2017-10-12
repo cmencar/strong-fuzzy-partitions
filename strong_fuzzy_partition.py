@@ -5,7 +5,7 @@ MIN = 0
 MAX = 1
 
 
-def build_trapezes_series(cuts, min_max):
+def constant_slope(cuts, min_max):
     assert isinstance(cuts, list)
     assert isinstance(min_max, list)
 
