@@ -12,7 +12,7 @@ Install on your machine (if you don't have it yet)
 ```bash
 sudo apt-get install python-tk
 ```
-on your machine. It can be useful to render some charts.
+It can be useful to render some charts.
 
 Clone the repo and move inside it with your terminal.
 Create and setup the environment:
