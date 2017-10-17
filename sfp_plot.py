@@ -1,5 +1,5 @@
 import matplotlib.pyplot as plt
-from data import TrapezoidalSFP
+from data import TrapezoidalSFP, TrapSeries
 
 
 def plot_trapeze_series(cuts, min_max, trapeze_series, depth):
@@ -15,7 +15,7 @@ def plot_trapeze_series(cuts, min_max, trapeze_series, depth):
 def _check_input(cuts, min_max, trapeze_series, depth):
     assert isinstance(cuts, list), 'Cuts is not a list'
     assert len(min_max) == 2, 'min_max param accepts only 2 values'
-    assert isinstance(trapeze_series, list), 'trapeze_series is not a list'
+    assert isinstance(trapeze_series, TrapSeries), 'trapeze_series is not a TrapSeries obj'
     assert depth > 0, 'depth cant be less or equal than 0'
 
 

@@ -1,15 +1,15 @@
-import strong_fuzzy_partition
+import sfp_generation
 import sfp_plot
 
 cuts = [3, 8, 15, 23]
 min_max = [2, 25]
 
-computed_trapezes = strong_fuzzy_partition.constant_slope(cuts, min_max)
-res = [str(trapeze) for trapeze in computed_trapezes]
+trap_series = sfp_generation.constant_slope(cuts, min_max)
+trap_series_vec = trap_series.vectorize()
 
 print 'cuts:\n' + str(cuts)
 print 'min-max:\n' + str(min_max)
 print 'trapeze series:\n'
-print res
+print trap_series_vec
 
-sfp_plot.plot_trapeze_series(cuts, min_max, computed_trapezes, depth=5)
+sfp_plot.plot_trapeze_series(cuts, min_max, trap_series, depth=5)

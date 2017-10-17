@@ -1,4 +1,4 @@
-from data import TrapezoidalSFP
+from data import TrapezoidalSFP, TrapSeries
 import numpy as np
 
 MIN = 0
@@ -12,13 +12,16 @@ def constant_slope(cuts, min_max):
 
     slope = _compute_slope(cuts, min_max)
     prev = _build_first_trap(LEFT_BOUND, min_max[MIN])
-    result = [prev]
+    trap_series = TrapSeries([prev])
+
     for i in range(0, len(cuts)):
-        new_trapeze = _build_single_trap(cuts[i], slope, prev)
-        result += [new_trapeze]
-        prev = new_trapeze
-    result += [TrapezoidalSFP(prev.c, prev.d, min_max[MAX], min_max[MAX])]
-    return result
+        trap = _build_single_trap(cuts[i], slope, prev)
+        trap_series.add_trap(trap)
+        prev = trap
+
+    last_trap = TrapezoidalSFP(prev.c, prev.d, min_max[MAX], min_max[MAX])
+    trap_series.add_trap(last_trap)
+    return trap_series
 
 
 def _compute_slope(cuts, min_max):
@@ -30,7 +33,7 @@ def _compute_slope(cuts, min_max):
     # delta_vector = [abs(diff) for diff in delta_vector] ...yes or no?
     delta_min_idx = int(np.argmin(delta_vector))
 
-    t_min = extended_cuts [delta_min_idx]
+    t_min = extended_cuts[delta_min_idx]
     t_min_next = extended_cuts[delta_min_idx + 1]
     slope = float(1) / (t_min_next - t_min)
     return slope
