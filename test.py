@@ -17,21 +17,12 @@ class MyTest(unittest.TestCase):
         expected = 0.5
         self.assertEqual(computed, expected)
 
-    def test_build_first_trapeze(self):
-        first_cut = 3
-        slope = 1
-        min_value = 2
-
-        computed = strong_fuzzy_partition._build_first_trapeze(first_cut, min_value, slope)
-        expected = TrapezoidalSFP(2, 2, 2.5, 3.5)
-        self.assertEqual(computed, expected)
-
     def test_build_single_trapeze(self):
         cut = 5
         slope = 1
         prev_trapeze = TrapezoidalSFP(1, 2, 3, 4)
 
-        computed = strong_fuzzy_partition._build_single_trapeze(cut, slope, prev_trapeze)
+        computed = strong_fuzzy_partition._build_single_trap(cut, slope, prev_trapeze)
         expected = TrapezoidalSFP(3, 4, 4.5, 5.5)
         self.assertEqual(computed, expected)
 
