@@ -1,13 +1,18 @@
 import matplotlib.pyplot as plt
-from data import TrapezoidalSFP, TrapSeries
+
+A = 0
+B = 1
+C = 2
+D = 3
 
 
-def plot_trapeze_series(cuts, min_max, trapeze_series, depth):
-    _check_input(cuts, min_max, trapeze_series, depth)
+def plot_trapeze_series(cuts, min_max, trap_series, depth):
+    _check_input(cuts, min_max, trap_series, depth)
     _draw_axes(min_max, depth)
     _draw_cuts(cuts)
-    for trapeze in trapeze_series:
-        _draw_trapeze(trapeze, depth, '-r')
+
+    for trap in trap_series:
+        _draw_trapeze(trap, depth, '-r')
 
     plt.show()
 
@@ -15,7 +20,6 @@ def plot_trapeze_series(cuts, min_max, trapeze_series, depth):
 def _check_input(cuts, min_max, trapeze_series, depth):
     assert isinstance(cuts, list), 'Cuts is not a list'
     assert len(min_max) == 2, 'min_max param accepts only 2 values'
-    assert isinstance(trapeze_series, TrapSeries), 'trapeze_series is not a TrapSeries obj'
     assert depth > 0, 'depth cant be less or equal than 0'
 
 
@@ -34,8 +38,7 @@ def _draw_cuts(cuts):
         plt.axvline(x=cut, linestyle='--')
 
 
-def _draw_trapeze(trapeze, depth, color):
-    assert isinstance(trapeze, TrapezoidalSFP)
-    plt.plot((trapeze.a, trapeze.b), (0, -depth), color)
-    plt.plot((trapeze.b, trapeze.c), (-depth, -depth), color)
-    plt.plot((trapeze.c, trapeze.d), (-depth, 0), color)
+def _draw_trapeze(trap, depth, color):
+    plt.plot((trap[A], trap[B]), (0, -depth), color)
+    plt.plot((trap[B], trap[C]), (-depth, -depth), color)
+    plt.plot((trap[C], trap[D]), (-depth, 0), color)

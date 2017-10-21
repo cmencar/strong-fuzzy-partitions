@@ -1,26 +1,28 @@
-from data import TrapezoidalSFP, TrapSeries
 import numpy as np
+from random import uniform
+import sfp_plot
+import trap_utility
 
 MIN = 0
 MAX = 1
 LEFT_BOUND = 0
+A = 0
+B = 1
+C = 2
+D = 3
 
 
 def constant_slope(cuts, min_max):
-    assert isinstance(cuts, list)
-    assert isinstance(min_max, list)
-
     slope = _compute_slope(cuts, min_max)
     prev = _build_first_trap(LEFT_BOUND, min_max[MIN])
-    trap_series = TrapSeries([prev])
+    trap_series = prev
 
     for i in range(0, len(cuts)):
         trap = _build_single_trap(cuts[i], slope, prev)
-        trap_series.add_trap(trap)
+        trap_series += [trap[C], trap[D]]
         prev = trap
 
-    last_trap = TrapezoidalSFP(prev.c, prev.d, min_max[MAX], min_max[MAX])
-    trap_series.add_trap(last_trap)
+    trap_series += [min_max[MAX], min_max[MAX]]
     return trap_series
 
 
@@ -40,14 +42,35 @@ def _compute_slope(cuts, min_max):
 
 
 def _build_first_trap(left_bound, min_value):
-    return TrapezoidalSFP(left_bound, left_bound, min_value, min_value)
+    return [left_bound, left_bound, min_value, min_value]
 
 
-def _build_single_trap(cut, slope, prev_trapeze):
-    assert isinstance(prev_trapeze, TrapezoidalSFP)
-
-    a = prev_trapeze.c
-    b = prev_trapeze.d
+def _build_single_trap(cut, slope, prev_trap):
+    a = prev_trap[A]
+    b = prev_trap[B]
     c = cut + (float(1) / 2 * -slope)
     d = cut - (float(1) / 2 * -slope)
-    return TrapezoidalSFP(a, b, c, d)
+    return [a, b, c, d]
+
+
+def randomize_slope(trap_series):
+    vec = trap_series[3:-1]
+    for i in range(1, len(vec) - 1):
+        vec[i] = uniform(vec[i - 1], vec[i + 1])
+    return trap_series[0:3] + vec + [trap_series[-1]]
+
+
+def get_slope_std(trap_series):
+    slope_list = []
+    real_series = trap_series[4:-2]
+
+    while real_series:
+        slope_list += [abs(real_series[0] - real_series[1])]
+        real_series = real_series[2:]
+
+    return np.std(slope_list)
+
+
+def plot(cuts, min_max, trap_series, depth):
+    split_series = trap_utility.split_in_trap(trap_series)
+    sfp_plot.plot_trapeze_series(cuts, min_max, split_series, depth)
