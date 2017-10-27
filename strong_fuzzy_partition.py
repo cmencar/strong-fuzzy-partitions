@@ -1,7 +1,10 @@
+"""
+    Generate a vectorial representation of a strong fuzzy partition
+    Algorithm and notation are taken from the paper: "Design of Strong Fuzzy Partition"
+    Link: https://www.researchgate.net/publication/266644545_Design_of_Strong_Fuzzy_Partitions_from_Cuts
+"""
+
 import numpy as np
-from random import uniform
-import sfp_plot
-import trap_utility
 
 MIN = 0
 MAX = 1
@@ -46,31 +49,8 @@ def _build_first_trap(left_bound, min_value):
 
 
 def _build_single_trap(cut, slope, prev_trap):
-    a = prev_trap[A]
-    b = prev_trap[B]
+    a = prev_trap[C]
+    b = prev_trap[D]
     c = cut + (float(1) / 2 * -slope)
     d = cut - (float(1) / 2 * -slope)
     return [a, b, c, d]
-
-
-def randomize_slope(trap_series):
-    vec = trap_series[3:-1]
-    for i in range(1, len(vec) - 1):
-        vec[i] = uniform(vec[i - 1], vec[i + 1])
-    return trap_series[0:3] + vec + [trap_series[-1]]
-
-
-def get_slope_std(trap_series):
-    slope_list = []
-    real_series = trap_series[4:-2]
-
-    while real_series:
-        slope_list += [abs(real_series[0] - real_series[1])]
-        real_series = real_series[2:]
-
-    return np.std(slope_list)
-
-
-def plot(cuts, min_max, trap_series, depth):
-    split_series = trap_utility.split_in_trap(trap_series)
-    sfp_plot.plot_trapeze_series(cuts, min_max, split_series, depth)

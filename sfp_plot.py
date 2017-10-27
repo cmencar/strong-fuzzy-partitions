@@ -13,7 +13,6 @@ def plot_trapeze_series(cuts, min_max, trap_series, depth):
 
     for trap in trap_series:
         _draw_trapeze(trap, depth, '-r')
-
     plt.show()
 
 
