@@ -15,18 +15,27 @@ C = 2
 D = 3
 
 
-def constant_slope(cuts, min_max):
-    slope = _compute_slope(cuts, min_max)
-    prev = _build_first_trap(LEFT_BOUND, min_max[MIN])
-    trap_series = prev
+def constant_slope(cuts_list, minmax_list):
+    assert len(cuts_list) == len(minmax_list)
 
-    for i in range(0, len(cuts)):
-        trap = _build_single_trap(cuts[i], slope, prev)
-        trap_series += [trap[C], trap[D]]
-        prev = trap
+    result = []
+    for i in range(0, len(cuts_list)):
+        cuts = cuts_list[i]
+        min_max = minmax_list[i]
 
-    trap_series += [min_max[MAX], min_max[MAX]]
-    return trap_series
+        slope = _compute_slope(cuts, min_max)
+        prev = _build_first_trap(LEFT_BOUND, min_max[MIN])
+        trap_series = prev
+
+        for i in range(0, len(cuts)):
+            trap = _build_single_trap(cuts[i], slope, prev)
+            trap_series += [trap[C], trap[D]]
+            prev = trap
+
+        trap_series += [min_max[MAX], min_max[MAX]]
+        result.append(trap_series)
+
+    return result
 
 
 def _compute_slope(cuts, min_max):

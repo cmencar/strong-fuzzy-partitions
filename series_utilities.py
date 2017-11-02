@@ -44,7 +44,7 @@ def compute_b(a, cut):
 
 
 # From a list of left-most vertex and a cut series, return a
-def randomize_a_series(a_series, cut_series, min_max):
+def compute_bounds(a_series, cut_series, min_max):
     result_a = [uniform(min_max[MIN], cut_series[0])]
     result_lb = [min_max[MIN]]
     result_ub = [cut_series[0]]
