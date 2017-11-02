@@ -11,6 +11,8 @@ depth = 5
 
 constant_slope = sfp.constant_slope(cuts_list, minmax_list)
 print "Constant slope trap series {}".format(constant_slope)
+plot_trapeze_series(cuts_list[0], minmax_list[0], split_in_trap(constant_slope[0]), depth)
+
 
 optimal_series = pso.run(constant_slope, cuts_list, minmax_list, depth, minimize_slope_std)
 

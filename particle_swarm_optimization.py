@@ -11,6 +11,7 @@ UPPER = 1
 def run(seeds, cuts, min_max, depth, fitness_function):
     # Optimization process needs only "a" vertex from every trap
     a_seeds = [util.extract_a_series(seed) for seed in seeds]
+    print "a_seeds {}".format(a_seeds)
 
     # Compute bounds. Bounds are the search space for the optimization process
     # It iterates over the number of data dimensions.

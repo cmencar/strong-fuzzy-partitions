@@ -5,6 +5,8 @@ MIN = 0
 MAX = 1
 
 
+# From a trap series [a1, b1, c1, d1, c2, d2, c3, d3] return a list of trap
+# [[a1, b1, c1, d1], [a2, b2, c2, d2], [a3, b3, c3, d3]]
 def split_in_trap(trap_series):
     def loop(series, acc):
         if len(series) < 4:
@@ -19,7 +21,9 @@ def split_in_trap(trap_series):
 # From vectorial representation of a trap series extract left-most vertex for every trap
 def extract_a_series(trap_series):
     result = []
-    real_series = trap_series[4:-2]
+
+    # remove min and max value
+    real_series = trap_series[2:-2]
     for i in range(0, len(real_series), 2):
         result += [real_series[i]]
     return result
@@ -34,7 +38,7 @@ def generate_series(a_series, cut_series, min_max):
         b = compute_b(a, cut)
         result += [a, b]
 
-    complete_result = [0, 0, min_max[MIN], min_max[MIN]] + result + [min_max[MAX], min_max[MAX]]
+    complete_result = [min_max[MIN], min_max[MIN]] + result + [min_max[MAX], min_max[MAX]]
     return complete_result
 
 
@@ -67,7 +71,7 @@ def get_slope_std(trap_series, depth):
         return float(y2 - y1) / (x2 - x1)
 
     slope_list = []
-    real_series = trap_series[4:-2]
+    real_series = trap_series[2:-2]
 
     while len(real_series) > 0:
         c = real_series[0]

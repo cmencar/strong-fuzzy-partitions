@@ -19,23 +19,29 @@ def constant_slope(cuts_list, minmax_list):
     assert len(cuts_list) == len(minmax_list)
 
     result = []
-    for i in range(0, len(cuts_list)):
-        cuts = cuts_list[i]
-        min_max = minmax_list[i]
-
-        slope = _compute_slope(cuts, min_max)
-        prev = _build_first_trap(LEFT_BOUND, min_max[MIN])
-        trap_series = prev
-
-        for i in range(0, len(cuts)):
-            trap = _build_single_trap(cuts[i], slope, prev)
-            trap_series += [trap[C], trap[D]]
-            prev = trap
-
-        trap_series += [min_max[MAX], min_max[MAX]]
-        result.append(trap_series)
-
+    dimension = len(cuts_list)
+    for d in range(0, dimension):
+        dimension_series = _constant_slope_single_dimension(cuts_list[d], minmax_list[d])
+        result.append(dimension_series)
     return result
+
+
+def _constant_slope_single_dimension(cuts, min_max):
+    slope = _compute_slope(cuts, min_max)
+    dummy = min_max[MIN]
+    dummy_trap = [dummy, dummy, min_max[MIN], min_max[MIN]]
+    prev = dummy_trap
+    trap_series = prev
+
+    for i in range(0, len(cuts)):
+        trap = _build_single_trap(cuts[i], slope, prev)
+        trap_series += [trap[C], trap[D]]
+        prev = trap
+    trap_series += [min_max[MAX], min_max[MAX]]
+
+    dummy_vertex = 2
+    trap_series = trap_series[dummy_vertex:]
+    return trap_series
 
 
 def _compute_slope(cuts, min_max):
@@ -51,10 +57,6 @@ def _compute_slope(cuts, min_max):
     t_min_next = extended_cuts[delta_min_idx + 1]
     slope = float(1) / (t_min_next - t_min)
     return slope
-
-
-def _build_first_trap(left_bound, min_value):
-    return [left_bound, left_bound, min_value, min_value]
 
 
 def _build_single_trap(cut, slope, prev_trap):
