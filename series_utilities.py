@@ -67,11 +67,27 @@ def compute_bounds(a_series, cut_series, min_max):
 
 # From a vectorial representation of a trap series compute the standard deviation of the slopes
 def get_slope_std(trap_series, depth):
+    slope_list = _get_slope_list(trap_series, depth)
+    return np.std(slope_list)
+
+
+# From a vectorial representation of a trap series compute the sum of the slopes
+def get_slope_sum(trap_series, depth):
+    slope_list = _get_slope_list(trap_series, depth)
+    return np.sum(slope_list)
+
+
+def _get_slope_list(trap_series, depth):
     def compute_segment_slope(x1, y1, x2, y2):
+        if x1 == x2:
+            x2 += 0.1
+        if y1 == y2:
+            y2 += 0.1
+
         return float(y2 - y1) / (x2 - x1)
 
-    slope_list = []
     real_series = trap_series[2:-2]
+    slope_list = []
 
     while len(real_series) > 0:
         c = real_series[0]
@@ -83,5 +99,4 @@ def get_slope_std(trap_series, depth):
         segment = compute_segment_slope(x1, y1, x2, y2)
         slope_list += [abs(segment)]
         real_series = real_series[2:]
-
-    return np.std(slope_list)
+    return slope_list
