@@ -1,43 +1,75 @@
 import matplotlib.pyplot as plt
-
-A = 0
-B = 1
-C = 2
-D = 3
+import matplotlib.gridspec as gridspec
+from series_utilities import split_in_trap
 
 
-def plot_trapeze_series(cuts, min_max, trap_series, depth):
-    _check_input(cuts, min_max, trap_series, depth)
-    _draw_axes(min_max, depth)
-    _draw_cuts(cuts)
+def trap_plot_2d(trap_series, cuts, min_max):
+    gs = gridspec.GridSpec(3, 4)
+    ax_cuts = plt.subplot(gs[0:-1, 1:])
+    ax_trapx = plt.subplot(gs[-1, 1:])
+    ax_trapy = plt.subplot(gs[:-1, 0])
 
-    for trap in trap_series:
-        _draw_trapeze(trap, depth, '-r')
+    draw_cuts(ax_cuts, cuts, min_max)
+    draw_trap_series_x(ax_trapx, trap_series[0], min_max[0])
+    draw_trap_series_y(ax_trapy, trap_series[1], min_max[1])
+
     plt.show()
 
 
-def _check_input(cuts, min_max, trapeze_series, depth):
-    assert isinstance(cuts, list), 'Cuts is not a list'
-    assert len(min_max) == 2, 'min_max param accepts only 2 values'
-    assert depth > 0, 'depth cant be less or equal than 0'
+def trap_plot(trap_series, cuts):
+    MIN = min([cuts[0][0], cuts[1][0]])
+    MAX = max(cuts[0][-1], cuts[0][-1])
+
+    plt.close('all')
+
+    f, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, sharex='col', sharey='row')
+    draw_trap_series_y(ax1, trap_series, [MIN, MAX])
+    draw_cuts(ax2, cuts, [MIN, MAX])
+    draw_trap_series_x(ax4, trap_series, [MIN, MAX])
+
+    plt.show()
 
 
-def _draw_axes(min_max, depth):
-    min_x = min_max[0]
-    max_x = min_max[1]
-    min_y = -depth
-    max_y = (max_x - min_x) / 3
+def draw_cuts(ax, cuts, min_max):
+    MIN_X = min_max[0][0]
+    MAX_X = min_max[0][1]
+    MIN_Y = min_max[1][0]
+    MAX_Y = min_max[1][1]
 
-    plt.axhline(y=0, color='k')
-    plt.axis([min_x, max_x, min_y, max_y])
-
-
-def _draw_cuts(cuts):
-    for cut in cuts:
-        plt.axvline(x=cut, linestyle='--')
+    [ax.plot([cut, cut], [MIN_X, MAX_X], '--r') for cut in cuts[0]]
+    [ax.plot([MIN_Y, MAX_Y], [cut, cut], '--b') for cut in cuts[1]]
 
 
-def _draw_trapeze(trap, depth, color):
-    plt.plot((trap[A], trap[B]), (0, -depth), color)
-    plt.plot((trap[B], trap[C]), (-depth, -depth), color)
-    plt.plot((trap[C], trap[D]), (-depth, 0), color)
+def draw_trap_series_x(ax, trap_series, min_max):
+    def draw_trap_x(ax, trap, min_max):
+        A = 0
+        B = 1
+        C = 2
+        D = 3
+        MIN = min_max[0]
+        MAX = min_max[1]
+
+        ax.plot([trap[A], trap[B]], [MAX, MIN], '-r')
+        ax.plot([trap[B], trap[C]], [MIN, MIN], '-r')
+        ax.plot([trap[C], trap[D]], [MIN, MAX], '-r')
+
+    # Real (simple) implementation
+    [draw_trap_x(ax, trap, min_max) for trap in split_in_trap(trap_series)]
+
+
+def draw_trap_series_y(ax, trap_series, min_max):
+    def draw_trap_y(ax, trap, min_max):
+        A = 0
+        B = 1
+        C = 2
+        D = 3
+        MIN = min_max[0]
+        MAX = min_max[1]
+
+        ax.plot([MIN, MAX], [trap[A], trap[B]], '-b')
+        ax.plot([MAX, MAX], [trap[B], trap[C]], '-b')
+        ax.plot([MAX, MIN], [trap[C], trap[D]], '-b')
+
+    # Real (simple) implelentation
+    [draw_trap_y(ax, trap, min_max) for trap in split_in_trap(trap_series)]
+

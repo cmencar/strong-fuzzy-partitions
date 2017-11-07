@@ -1,4 +1,5 @@
 import series_utilities as util
+import numpy as np
 
 
 def minimize_slope_std(a_series, *args):
@@ -7,7 +8,20 @@ def minimize_slope_std(a_series, *args):
     a_series_split = _split_series_for_dimension(a_series, cuts_list)
     trap_series_split = _rebuild_series(a_series_split, cuts_list, minmax_list)
     slope_std_list = [util.get_slope_std(trap_series, depth) for trap_series in trap_series_split]
+
     result = sum(slope_std_list) / len(slope_std_list)
+    return result
+
+
+def minimize_slope_std_flatten(a_series, *args):
+    cuts_list, minmax_list, depth = args
+
+    a_series_split = _split_series_for_dimension(a_series, cuts_list)
+    trap_series_split = _rebuild_series(a_series_split, cuts_list, minmax_list)
+    slope_list_for_dimension = [util.get_slope_list(trap_series, depth) for trap_series in trap_series_split]
+    flatten_slope_list = [x for slope_list in slope_list_for_dimension for x in slope_list]
+
+    result = np.std(flatten_slope_list)
     return result
 
 
@@ -19,6 +33,16 @@ def minimize_slope_sum(a_series, *args):
     slope_sum_list = [util.get_slope_sum(trap_series, depth) for trap_series in trap_series_split]
     result = sum(slope_sum_list) / len(slope_sum_list)
     return -result
+
+
+def minimize_slope_sum_flatten(a_series, *args):
+    cuts_list, minmax_list, depth = args
+
+    a_series_split = _split_series_for_dimension(a_series, cuts_list)
+    trap_series_split = _rebuild_series(a_series_split, cuts_list, minmax_list)
+    slope_list_for_dimension = [util.get_slope_list(trap_series, depth) for trap_series in trap_series_split]
+    flatten_slope_list = [x for slope_list in slope_list_for_dimension for x in slope_list]
+    return -sum(flatten_slope_list)
 
 
 def _split_series_for_dimension(a_series, cuts_list):

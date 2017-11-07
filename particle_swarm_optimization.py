@@ -1,8 +1,5 @@
 from pyswarm import pso
-import strong_fuzzy_partition as sfp
 import series_utilities as util
-from sfp_plot import plot_trapeze_series
-from scipy.spatial.distance import cosine
 from objective_function import con
 
 LOWER = 0
