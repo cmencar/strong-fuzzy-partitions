@@ -1,4 +1,5 @@
-from random import uniform
+# coding=utf-8
+from sympy import Symbol, limit
 import numpy as np
 
 MIN = 0
@@ -38,8 +39,8 @@ def generate_series(a_series, cut_series, min_max):
         b = compute_b(a, cut)
         result += [a, b]
 
-    complete_result = [min_max[MIN], min_max[MIN]] + result + [min_max[MAX], min_max[MAX]]
-    return complete_result
+    result = [min_max[MIN], min_max[MIN]] + result + [min_max[MAX], min_max[MAX]]
+    return result
 
 
 # From a cut and a vertex "a" on the left side, compute the vertex on the right side, passing in the mid of the cut
@@ -47,47 +48,35 @@ def compute_b(a, cut):
     return (cut - a) * 2 + a
 
 
-# From a list of left-most vertex and a cut series, return a
-def compute_bounds(a_series, cut_series, min_max):
-    result_a = [uniform(min_max[MIN], cut_series[0])]
-    result_lb = [min_max[MIN]]
-    result_ub = [cut_series[0]]
+def compute_bounds(a_series, cuts, min_max):
+    dummy_cuts = cuts + [min_max[MAX]]
+    first_lb = min_max[MIN]
+    first_lb = _fix_lb(first_lb, cuts[0], cuts[1])
+    lb = [first_lb]
+    ub = [dummy_cuts[0]]
 
     for i in range(1, len(a_series)):
-        ith_lb = compute_b(result_a[i - 1], cut_series[i - 1])
-        ith_ub = cut_series[i]
-        ith_a = uniform(ith_lb, ith_ub)
+        ith_lb = compute_b(lb[i - 1], dummy_cuts[i - 1])
+        ith_lb = _fix_lb(ith_lb, dummy_cuts[i], dummy_cuts[i + 1])
+        ith_ub = dummy_cuts[i]
 
-        result_lb.append(ith_lb)
-        result_ub.append(ith_ub)
-        result_a.append(ith_a)
+        lb.append(ith_lb)
+        ub.append(ith_ub)
 
-    return [result_lb, result_ub]
-
-
-"""
-# From a vectorial representation of a trap series compute the standard deviation of the slopes
-def get_slope_std(trap_series, depth):
-    slope_list = get_slope_list(trap_series, depth)
-    return np.std(slope_list)
+    return [lb, ub]
 
 
+def _fix_lb(lb_i, cut_i, cut_i_next):
+    if compute_b(lb_i, cut_i) < cut_i_next:
+        return lb_i
 
-def get_slope_sum(trap_series, depth):
-    slope_list = get_slope_list(trap_series, depth)
-    return np.sum(slope_list)
-"""
+    while True:
+        lb_i += 0.01
+        if compute_b(lb_i, cut_i) < cut_i_next:
+            return lb_i
 
 
-def get_slope_list(trap_series, depth):
-    def compute_segment_slope(x1, y1, x2, y2):
-        if x1 == x2:
-            x2 += 0.1
-        if y1 == y2:
-            y2 += 0.1
-
-        return float(y2 - y1) / (x2 - x1)
-
+def get_slope_list(trap_series, depth, compute_slope_func):
     real_series = trap_series[2:-2]
     slope_list = []
 
@@ -98,7 +87,25 @@ def get_slope_list(trap_series, depth):
         y1 = -depth
         x2 = d
         y2 = 0
-        segment = compute_segment_slope(x1, y1, x2, y2)
+        segment = compute_slope_func(x1, y1, x2, y2)
         slope_list += [abs(segment)]
         real_series = real_series[2:]
+
     return slope_list
+
+
+def segment_slope(x1, y1, x2, y2):
+    if x1 == x2:
+         x2 += 0.1
+    if y1 == y2:
+        y2 += 0.1
+    return float(y2 - y1) / (x2 - x1)
+
+
+def arctan_segment_slope(x1, y1, x2, y2):
+    dy = y2 - y1
+    dx = x2 - x1
+
+    x = Symbol('x')
+    slope = limit(dy / x, x, dx)
+    return np.arctan(float(slope))

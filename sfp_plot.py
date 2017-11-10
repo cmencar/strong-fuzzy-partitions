@@ -36,8 +36,8 @@ def draw_cuts(ax, cuts, min_max):
     MIN_Y = min_max[1][0]
     MAX_Y = min_max[1][1]
 
-    [ax.plot([cut, cut], [MIN_X, MAX_X], '--r') for cut in cuts[0]]
-    [ax.plot([MIN_Y, MAX_Y], [cut, cut], '--b') for cut in cuts[1]]
+    [ax.plot([cut, cut], [MIN_Y, MAX_Y], '--r') for cut in cuts[0]]
+    [ax.plot([MIN_X, MAX_X], [cut, cut], '--b') for cut in cuts[1]]
 
 
 def draw_trap_series_x(ax, trap_series, min_max):

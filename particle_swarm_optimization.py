@@ -1,6 +1,5 @@
 from pyswarm import pso
 import series_utilities as util
-from objective_function import con
 
 LOWER = 0
 UPPER = 1
@@ -23,7 +22,7 @@ def run(seeds, cuts, min_max, depth, fitness_function, max_iter):
 
     # Run PSO
     args = (cuts, min_max, depth)
-    optimal_a, optimal_func_out = pso(fitness_function, lb, ub, args=args, maxiter=max_iter, f_ieqcons=con)
+    optimal_a, optimal_func_out = pso(fitness_function, lb, ub, args=args, maxiter=max_iter)
     print "Best fitnessfunc's output found: {}".format(optimal_func_out)
     print "Best fiting data: {}".format(optimal_a)
 
