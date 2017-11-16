@@ -94,14 +94,6 @@ def get_slope_list(trap_series, depth, compute_slope_func):
     return slope_list
 
 
-def segment_slope(x1, y1, x2, y2):
-    if x1 == x2:
-         x2 += 0.1
-    if y1 == y2:
-        y2 += 0.1
-    return float(y2 - y1) / (x2 - x1)
-
-
 def arctan_segment_slope(x1, y1, x2, y2):
     dy = y2 - y1
     dx = x2 - x1
