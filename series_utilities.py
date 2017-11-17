@@ -19,7 +19,7 @@ def split_in_trap(trap_series):
     return loop(trap_series, [])
 
 
-# From vectorial representation of a trap series extract left-most vertex for every trap
+# From vector representation of a trap series extract left-most vertex for every trap
 def extract_a_series(trap_series):
     result = []
 
@@ -30,7 +30,7 @@ def extract_a_series(trap_series):
     return result
 
 
-# From a list of left-most vertex and a cut series, recreate the trap series in a vectorial representation
+# From a list of left-most vertex and a cut series, recreate the vector representation of the trap series
 def generate_series(a_series, cut_series, min_max):
     result = []
     for i in range(0, len(a_series)):
@@ -43,11 +43,12 @@ def generate_series(a_series, cut_series, min_max):
     return result
 
 
-# From a cut and a vertex "a" on the left side, compute the vertex on the right side, passing in the mid of the cut
+# From a cut and a vertex "a" on the left side, compute the vertex "b" on the right side (0.5 cut)
 def compute_b(a, cut):
     return (cut - a) * 2 + a
 
 
+# Compute the search space for the optimization problem
 def compute_bounds(a_series, cuts, min_max):
     dummy_cuts = cuts + [min_max[MAX]]
     first_lb = min_max[MIN]
@@ -76,6 +77,7 @@ def _fix_lb(lb_i, cut_i, cut_i_next):
             return lb_i
 
 
+# Get the slope (in abs value) of every trap
 def get_slope_list(trap_series, depth, compute_slope_func):
     real_series = trap_series[2:-2]
     slope_list = []
@@ -94,6 +96,7 @@ def get_slope_list(trap_series, depth, compute_slope_func):
     return slope_list
 
 
+# Compute the slope, handling division-by-zero error and +inf/-inf values
 def arctan_segment_slope(x1, y1, x2, y2):
     dy = y2 - y1
     dx = x2 - x1

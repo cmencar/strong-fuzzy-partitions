@@ -55,6 +55,10 @@ def _rebuild_series(a_series_split, cuts_list, minmax_list):
     return result
 
 
+"""
+    Check if a series contains rectangle instead tapezes.
+    You can use this function if you want to penalize this kind of series in a objective function
+"""
 def _rect_instead_trap(series):
     series_without_duplicate = [x for x in series if series.count(x) == 1]
     return len(series) != len(series_without_duplicate)
