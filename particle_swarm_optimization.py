@@ -5,7 +5,7 @@ LOWER = 0
 UPPER = 1
 
 
-def run(seeds, cuts, min_max, depth, fitness_function, max_iter):
+def run(seeds, cuts, min_max, fitness_function, max_iter):
     # Optimization process needs only "a" vertex from every trap
     a_seeds = [util.extract_a_series(seed) for seed in seeds]
     print "a_seeds {}".format(a_seeds)
@@ -21,7 +21,7 @@ def run(seeds, cuts, min_max, depth, fitness_function, max_iter):
     print "lb: {}\nub: {}".format(lb, ub)
 
     # Run PSO
-    args = (cuts, min_max, depth)
+    args = (cuts, min_max)
     optimal_a, optimal_func_out = pso(fitness_function, lb, ub, args=args, maxiter=max_iter)
     print "Best fitnessfunc's output found: {}".format(optimal_func_out)
     print "Best fiting data: {}".format(optimal_a)

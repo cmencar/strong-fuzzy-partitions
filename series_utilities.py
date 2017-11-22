@@ -78,9 +78,10 @@ def _fix_lb(lb_i, cut_i, cut_i_next):
 
 
 # Get the slope (in abs value) of every trap
-def get_slope_list(trap_series, depth, compute_slope_func):
+def get_slope_list(trap_series, compute_slope_func):
     real_series = trap_series[2:-2]
     slope_list = []
+    depth = 1
 
     while len(real_series) > 0:
         c = real_series[0]
