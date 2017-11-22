@@ -81,13 +81,13 @@ def _fix_lb(lb_i, cut_i, cut_i_next):
 def get_slope_list(trap_series, compute_slope_func):
     real_series = trap_series[2:-2]
     slope_list = []
-    depth = 1
+    height = 1
 
     while len(real_series) > 0:
         c = real_series[0]
         d = real_series[1]
         x1 = c
-        y1 = -depth
+        y1 = -height
         x2 = d
         y2 = 0
         segment = compute_slope_func(x1, y1, x2, y2)
