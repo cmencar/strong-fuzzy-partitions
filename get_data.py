@@ -10,13 +10,3 @@ def get_data(file):
             point.append(data[i][-1][:-1])
             points.append(point)
     return points
-
-
-# testing
-"""
-dataset = get_data("data.csv")
-print dataset
-for i in dataset:
-    if round(float(i[0][0]), 2) < 0.13:
-        print i[0][0]
-"""

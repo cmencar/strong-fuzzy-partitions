@@ -1,7 +1,4 @@
-from base_generator import generate_base
-from membership_function import set_class_according_to_membership
-from dataset_classifier import classify_points
-from accuracy_calculator import calculate_accuracy
+from membership_function import get_dataset_accuracy
 import strong_fuzzy_partition as sfp
 import particle_swarm_optimization as pso
 import objective_function as obj
@@ -9,9 +6,6 @@ from sfp_plot import trap_plot_2d
 import time
 
 start_time = time.time()
-
-# cuts_list = [[3, 8, 15, 23], [4, 7, 10]]
-# minmax_list = [[2, 25], [3, 15]]
 
 """
 dataset, cuts_list, trapezes, granules = generate_base(minmax_list, 10, 2)

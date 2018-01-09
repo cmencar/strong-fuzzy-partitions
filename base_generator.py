@@ -1,5 +1,4 @@
 import random
-import numpy as np
 
 # div_factor should be at least 10 times less than the difference between m and M
 DIV_FACTOR = 10

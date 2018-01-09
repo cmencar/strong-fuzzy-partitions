@@ -55,20 +55,6 @@ def _get_coord_membership(coord, trapeze):
     return membership
 
 
-"""
-def set_class_according_to_membership(dataset, trapezes, granules, cuts_list, minmax_list):
-    for point in dataset:
-        membership_value, granule = _get_membership(point, trapezes, granules)
-        _set_class(point, granule, cuts_list, minmax_list)
-    return dataset
-
-def _set_class(point, granule, cuts_list, minmax_list):
-    if is_in_granule(point, granule, cuts_list, minmax_list):
-        point.append(granule[-1])
-    # return point.append(granule[-1]) if is_in_granule(point, granule, cuts_list, minmax_list)   else point.append("no class")
-    return point
-"""
-
 # testing
 dataset = gd.get_data('data.csv')
 print dataset
@@ -78,4 +64,4 @@ trapezes_list = [[[0.1, 0.1, 0.45, 0.55], [0.45, 0.55, 0.8, 0.8]],
                  [[0.1, 0.1, 0.35, 0.45], [0.35, 0.45, 0.55, 0.65], [0.55, 0.65, 0.9, 0.9]]]
 granules_list = [[1, 1, 'C1'], [2, 2, 'C2'], [1, 3, 'C1']]
 
-print get_dataset_accuracy(dataset, cuts_list, minmax_list, granules_list),'%'
+print get_dataset_accuracy(dataset, cuts_list, minmax_list, granules_list), '%'
