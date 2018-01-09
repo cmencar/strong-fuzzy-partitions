@@ -4,7 +4,7 @@ import numpy as np
 # div_factor should be at least 10 times less than the difference between m and M
 DIV_FACTOR = 10
 
-SLOPE = 1
+SLOPE = 0.05
 
 CLASSES = ['green', 'red', 'blue']
 
