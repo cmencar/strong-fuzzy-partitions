@@ -8,8 +8,8 @@ PENALIZATION_VALUE = 10000
 def minimize_slope_std(a_series, *args):
     cuts_list, minmax_list = args
 
-    a_series_split = _split_series_for_dimension(a_series, cuts_list)
-    trap_series_split = _rebuild_series(a_series_split, cuts_list, minmax_list)
+    a_series_split = split_series_for_dimension(a_series, cuts_list)
+    trap_series_split = rebuild_series(a_series_split, cuts_list, minmax_list)
 
     compute_slope_fun = util.arctan_segment_slope
     slope_multi_list = [util.get_slope_list(trap_series, compute_slope_fun) for trap_series in trap_series_split]
@@ -22,8 +22,8 @@ def minimize_slope_std(a_series, *args):
 def minimize_slope_sum(a_series, *args):
     cuts_list, minmax_list = args
 
-    a_series_split = _split_series_for_dimension(a_series, cuts_list)
-    trap_series_split = _rebuild_series(a_series_split, cuts_list, minmax_list)
+    a_series_split = split_series_for_dimension(a_series, cuts_list)
+    trap_series_split = rebuild_series(a_series_split, cuts_list, minmax_list)
 
     compute_slope_fun = util.arctan_segment_slope
     slope_multi_list = [util.get_slope_list(trap_series, compute_slope_fun) for trap_series in trap_series_split]
@@ -39,7 +39,7 @@ def minimize_slope_sum(a_series, *args):
     return -result
 
 
-def _split_series_for_dimension(a_series, cuts_list):
+def split_series_for_dimension(a_series, cuts_list):
     result = []
     for i in range(0, len(cuts_list)):
         k = len(cuts_list[i])
@@ -48,7 +48,7 @@ def _split_series_for_dimension(a_series, cuts_list):
     return result
 
 
-def _rebuild_series(a_series_split, cuts_list, minmax_list):
+def rebuild_series(a_series_split, cuts_list, minmax_list):
     result = []
     for i in range(0, len(a_series_split)):
         trap_series = util.generate_series(a_series_split[i], cuts_list[i], minmax_list[i])

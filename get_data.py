@@ -5,7 +5,7 @@ def get_data(file):
         for i in range(3, len(data)):
             point = []
             data[i] = data[i].split(",")
-            tuple = (data[i][0], data[i][1])
+            tuple = (float(data[i][0]), float(data[i][1]))
             point.append(tuple)
             point.append(data[i][-1][:-1])
             points.append(point)

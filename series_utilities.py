@@ -19,6 +19,10 @@ def split_in_trap(trap_series):
     return loop(trap_series, [])
 
 
+def recreate_trapezes(series):
+    return [split_in_trap(series[i]) for i in range(len(series))]
+
+
 # From vector representation of a trap series extract left-most vertex for every trap
 def extract_a_series(trap_series):
     result = []
@@ -52,7 +56,7 @@ def compute_b(a, cut):
 def compute_bounds(a_series, cuts, min_max):
     dummy_cuts = cuts + [min_max[MAX]]
     first_lb = min_max[MIN]
-    first_lb = _fix_lb(first_lb, cuts[0], cuts[1])
+    first_lb = _fix_lb(first_lb, dummy_cuts[0], dummy_cuts[1])
     lb = [first_lb]
     ub = [dummy_cuts[0]]
 
