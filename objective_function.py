@@ -57,8 +57,8 @@ def rebuild_series(a_series_split, cuts_list, minmax_list):
 
 
 """
-    Check if a series contains rectangle instead tapezes.
-    You can use this function if you want to penalize this kind of series in a objective function
+    Check if a series contains rectangle instead of trapezes.
+    You can use this function if you want to penalize this kind of series in an objective function
 """
 
 

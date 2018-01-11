@@ -19,6 +19,7 @@ def split_in_trap(trap_series):
     return loop(trap_series, [])
 
 
+# Recreate trapezes for all dimensions
 def recreate_trapezes(series):
     return [split_in_trap(series[i]) for i in range(len(series))]
 
@@ -109,3 +110,17 @@ def arctan_segment_slope(x1, y1, x2, y2):
     x = Symbol('x')
     slope = limit(dy / x, x, dx)
     return np.arctan(float(slope))
+
+
+def multiply(list):
+    to_return = []
+    for el in list:
+        to_return.append([i * 10 for i in el])
+    return to_return
+
+
+def divide(list):
+    to_return = []
+    for el in list:
+        to_return.append([i / 10 for i in el])
+    return to_return

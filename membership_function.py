@@ -1,5 +1,4 @@
 import series_utilities as util
-import get_data as gd
 import objective_function as obj
 
 A = 0
@@ -11,7 +10,7 @@ D = 3
 def get_dataset_accuracy(a_series, *args):
     cuts_list, minmax_list, granules, dataset = args
     num_good_classification = 0
-    print 's', a_series
+    print 'a_series {}'.format(a_series)
     a_series_split = obj.split_series_for_dimension(a_series, cuts_list)
     trap_series_split = obj.rebuild_series(a_series_split, cuts_list, minmax_list)
     trapezes = util.recreate_trapezes(trap_series_split)

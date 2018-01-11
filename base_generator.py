@@ -1,3 +1,10 @@
+"""
+
+Series of methods to randomly generate data. Not used for this work.
+
+"""
+
+
 import random
 
 # div_factor should be at least 10 times less than the difference between m and M
