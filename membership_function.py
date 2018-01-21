@@ -10,7 +10,6 @@ D = 3
 def get_dataset_accuracy(a_series, *args):
     cuts_list, minmax_list, granules, dataset = args
     num_good_classification = 0
-    print 'a_series {}'.format(a_series)
     a_series_split = obj.split_series_for_dimension(a_series, cuts_list)
     trap_series_split = obj.rebuild_series(a_series_split, cuts_list, minmax_list)
     trapezes = util.recreate_trapezes(trap_series_split)
@@ -18,7 +17,7 @@ def get_dataset_accuracy(a_series, *args):
         membership_value, granule = _get_membership(point, trapezes, granules)
         if point[-1] == granule[-1] and membership_value > 0:
             num_good_classification = num_good_classification + 1
-        accuracy_perc = float(num_good_classification) / len(dataset) * 100
+    accuracy_perc = float(num_good_classification) / len(dataset) * 100
     return -accuracy_perc
 
 

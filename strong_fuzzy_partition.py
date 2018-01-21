@@ -13,6 +13,7 @@ A = 0
 B = 1
 C = 2
 D = 3
+ERR_VALUE = float('nan')
 
 
 def constant_slope(cuts_list, minmax_list):
@@ -26,6 +27,7 @@ def constant_slope(cuts_list, minmax_list):
     return result
 
 
+"""
 def _constant_slope_single_dimension(cuts, min_max):
     slope = _compute_slope(cuts, min_max)
     dummy = min_max[MIN]
@@ -42,6 +44,22 @@ def _constant_slope_single_dimension(cuts, min_max):
     dummy_vertex = 2
     trap_series = trap_series[dummy_vertex:]
     return trap_series
+"""
+
+
+def _constant_slope_single_dimension(cuts, minmax):
+    slope = _compute_slope(cuts, minmax)
+    traps = [[ERR_VALUE, ERR_VALUE, ERR_VALUE, ERR_VALUE] for i in range(0, len(cuts) + 1)]
+    for i in range(0, len(cuts)):
+        traps[i + 1][A] = cuts[i] - (1 / (2 * slope))
+        traps[i + 1][B] = cuts[i] + (1 / (2 * slope))
+        traps[i][C] = traps[i + 1][0]
+        traps[i][D] = traps[i + 1][1]
+    traps[0][A] = minmax[0]
+    traps[0][B] = minmax[0]
+    traps[-1][C] = minmax[1]
+    traps[-1][D] = minmax[1]
+    return traps
 
 
 def _compute_slope(cuts, min_max):

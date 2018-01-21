@@ -4,6 +4,8 @@ import numpy as np
 
 MIN = 0
 MAX = 1
+A = 0
+B = 1
 
 
 # From a trap series [a1, b1, c1, d1, c2, d2, c3, d3] return a list of trap
@@ -112,15 +114,22 @@ def arctan_segment_slope(x1, y1, x2, y2):
     return np.arctan(float(slope))
 
 
-def multiply(list):
-    to_return = []
-    for el in list:
-        to_return.append([i * 10 for i in el])
-    return to_return
+# split a bidimensional series of traps.
+# Ex: [[[a1,b1,c1,d1],[a2,b2,c2,d2]], [[a1,b1,c1,d1],[a2,b2,c2,d2],[a3,b3,c3,d3]]] -->
+# [[a1,b1,a2(c1),b2(d1), c2, d2], [a1,b1,a2(c1),b2(d1),a3(c2),b3(d2),c3,d3]]
+def to_linear_series(trap_series, dim):
+    traps = []
+    for j in range(dim):
+        series = []
+        for i in range(len(trap_series[j])):
+            series.append(trap_series[j][i][A])
+            series.append(trap_series[j][i][B])
+        series.append(trap_series[j][-1][-2])
+        series.append(trap_series[j][-1][-1])
+        traps.append(series)
+    return traps
 
 
-def divide(list):
-    to_return = []
-    for el in list:
-        to_return.append([i / 10 for i in el])
-    return to_return
+# it flattens a bidimensional list to a single list
+def to_a_series(list):
+    return [item for sublist in list for item in sublist]

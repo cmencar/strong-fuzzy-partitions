@@ -1,6 +1,6 @@
 def get_data(file):
     points = []
-    with open(file) as dataset:
+    with open(file, 'r') as dataset:
         data = dataset.readlines()
         for i in range(3, len(data)):
             point = []
