@@ -1,5 +1,4 @@
 import series_utilities as util
-import objective_function as obj
 
 A = 0
 B = 1
@@ -10,8 +9,8 @@ D = 3
 def get_dataset_accuracy(a_series, *args):
     cuts_list, minmax_list, granules, dataset = args
     num_good_classification = 0
-    a_series_split = obj.split_series_for_dimension(a_series, cuts_list)
-    trap_series_split = obj.rebuild_series(a_series_split, cuts_list, minmax_list)
+    a_series_split = util.split_series_for_dimension(a_series, cuts_list)
+    trap_series_split = util.rebuild_series(a_series_split, cuts_list, minmax_list)
     trapezes = util.recreate_trapezes(trap_series_split)
     for point in dataset:
         membership_value, granule = _get_membership(point, trapezes, granules)

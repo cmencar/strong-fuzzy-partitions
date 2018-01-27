@@ -133,3 +133,31 @@ def to_linear_series(trap_series, dim):
 # it flattens a bidimensional list to a single list
 def to_a_series(list):
     return [item for sublist in list for item in sublist]
+
+
+def split_series_for_dimension(a_series, cuts_list):
+    result = []
+    for i in range(0, len(cuts_list)):
+        k = len(cuts_list[i])
+        result.append(a_series[0:k])
+        a_series = a_series[k:]
+    return result
+
+
+def rebuild_series(a_series_split, cuts_list, minmax_list):
+    result = []
+    for i in range(0, len(a_series_split)):
+        trap_series = generate_series(a_series_split[i], cuts_list[i], minmax_list[i])
+        result.append(trap_series)
+    return result
+
+
+"""
+    Check if a series contains rectangle instead of trapezes.
+    You can use this function if you want to penalize this kind of series in an objective function
+"""
+
+
+def rect_instead_trap(series):
+    series_without_duplicate = [x for x in series if series.count(x) == 1]
+    return len(series) != len(series_without_duplicate)
