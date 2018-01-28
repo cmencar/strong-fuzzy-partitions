@@ -5,8 +5,9 @@ def get_data(file):
         for i in range(3, len(data)):  # first three rows in Orange are details about data
             point = []
             data[i] = data[i].split(",")
+            data[i][-1] = data[i][-1].replace('\n', '')
             tuple = (float(data[i][0]), float(data[i][1]))
             point.append(tuple)
-            point.append(data[i][-1][:-1])
+            point.append(data[i][-1])
             points.append(point)
     return points
