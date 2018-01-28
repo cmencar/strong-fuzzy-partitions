@@ -11,14 +11,14 @@ start_time = time.time()
 """ punti al centro
 cuts_list = [[6], [7, 10]]
 minmax_list = [[2, 10], [3, 15]]
-dataset = gd.get_data('center_data.csv')
+dataset = gd.get_data('dataset/center_data.csv')
 granules_list = [[1, 1, 'C1'], [2, 2, 'C2'], [1, 3, 'C1']]
 print dataset
 """
 """ punti sui bordi
 cuts_list = [[5], [6, 8]]
 minmax_list = [[2, 8], [3, 10]]
-dataset = gd.get_data('edge_data.csv')
+dataset = gd.get_data('dataset/edge_data.csv')
 granules_list = [[1, 1, 'C1'], [2, 2, 'C2'], [1, 3, 'C1']]
 print dataset
 """
@@ -26,7 +26,7 @@ print dataset
 """ punti rumorosi sui bordi
 cuts_list = [[5], [5, 8]]
 minmax_list = [[2, 8], [3, 9]]
-dataset = gd.get_data('edge_noisy_data.csv')
+dataset = gd.get_data('dataset/edge_noisy_data.csv')
 granules_list = [[1, 1, 'C1'], [2, 2, 'C2'], [1, 3, 'C1']]
 print dataset
 """
@@ -35,7 +35,7 @@ print dataset
 cuts_list = [[0.5], [0.4, 0.6]]
 minmax_list = [[0, 1], [0, 1]]
 granules_list = [[1, 1, 'C1'], [2, 2, 'C2'], [1, 3, 'C1']]
-dataset = gd.get_data('uniform_data.csv')
+dataset = gd.get_data('dataset/uniform_data.csv')
 print dataset
 
 constant_slope = sfp.constant_slope(cuts_list, minmax_list)
