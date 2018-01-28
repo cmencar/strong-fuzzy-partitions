@@ -2,7 +2,7 @@ def get_data(file):
     points = []
     with open(file, 'r') as dataset:
         data = dataset.readlines()
-        for i in range(3, len(data)):
+        for i in range(3, len(data)):  # first three rows in Orange are details about data
             point = []
             data[i] = data[i].split(",")
             tuple = (float(data[i][0]), float(data[i][1]))
