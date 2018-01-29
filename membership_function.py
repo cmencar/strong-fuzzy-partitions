@@ -6,7 +6,7 @@ C = 2
 D = 3
 
 
-def get_dataset_accuracy(a_series, *args):
+def calculate_dataset_accuracy(a_series, *args):
     cuts_list, minmax_list, granules, dataset = args
     num_good_classification = 0
     a_series_split = util.split_series_for_dimension(a_series, cuts_list)

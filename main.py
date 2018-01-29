@@ -53,11 +53,11 @@ print "a_seeds {}".format(a_seeds)
 constant_slope_a_seeds = util.to_a_series(a_seeds)
 
 constant_slope_accuracy = -(
-    mf.get_dataset_accuracy(constant_slope_a_seeds, cuts_list, minmax_list, granules_list, dataset))
+    mf.calculate_dataset_accuracy(constant_slope_a_seeds, cuts_list, minmax_list, granules_list, dataset))
 print 'Constant slope accuracy: {}'.format(constant_slope_accuracy)
 
 max_iter = 100
-optimal_series = pso.run(a_seeds, cuts_list, minmax_list, granules_list, dataset, mf.get_dataset_accuracy,
+optimal_series = pso.run(a_seeds, cuts_list, minmax_list, granules_list, dataset, mf.calculate_dataset_accuracy,
                          max_iter)
 print "optimal series: {}".format(optimal_series)
 
